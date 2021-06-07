@@ -1,0 +1,10 @@
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.csprojAssemblyReference.cache
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.Form1.resources
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.Properties.Resources.resources
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.csproj.GenerateResource.cache
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.csproj.CoreCompileInputs.cache
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\bin\Debug\quickmailer.exe
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\bin\Debug\quickmailer.pdb
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.csproj.ResolveComReference.cache
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.exe
+G:\BSUIR\4 sem\КСИС\Lab4\quickmailer\quickmailer\obj\x86\Debug\quickmailer.pdb
