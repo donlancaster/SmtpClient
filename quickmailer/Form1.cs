@@ -292,7 +292,7 @@ namespace quickmailer
     class Mailer
     {
         private SmtpClient client;
-        private Attachment attachment;
+   
 
         public Mailer(NetworkCredential credentials)
         {

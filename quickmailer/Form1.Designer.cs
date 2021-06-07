@@ -208,7 +208,7 @@
             this.listAttachments.HideSelection = false;
             this.listAttachments.Location = new System.Drawing.Point(63, 315);
             this.listAttachments.Name = "listAttachments";
-            this.listAttachments.Size = new System.Drawing.Size(237, 97);
+            this.listAttachments.Size = new System.Drawing.Size(237, 163);
             this.listAttachments.TabIndex = 21;
             this.listAttachments.UseCompatibleStateImageBehavior = false;
             this.listAttachments.View = System.Windows.Forms.View.List;

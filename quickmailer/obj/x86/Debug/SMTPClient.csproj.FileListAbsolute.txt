@@ -1,0 +1,10 @@
+X:\ксис\4\quickmailer\obj\x86\Debug\SMTPClient.csprojAssemblyReference.cache
+X:\ксис\4\quickmailer\obj\x86\Debug\SMTPClient.csproj.ResolveComReference.cache
+X:\ксис\4\quickmailer\obj\x86\Debug\quickmailer.Form1.resources
+X:\ксис\4\quickmailer\obj\x86\Debug\quickmailer.Properties.Resources.resources
+X:\ксис\4\quickmailer\obj\x86\Debug\SMTPClient.csproj.GenerateResource.cache
+X:\ксис\4\quickmailer\obj\x86\Debug\SMTPClient.csproj.CoreCompileInputs.cache
+X:\ксис\4\quickmailer\obj\x86\Debug\quickmailer.exe
+X:\ксис\4\quickmailer\obj\x86\Debug\quickmailer.pdb
+X:\ксис\4\quickmailer\bin\Debug\quickmailer.exe
+X:\ксис\4\quickmailer\bin\Debug\quickmailer.pdb
