@@ -25,6 +25,7 @@ namespace quickmailer
         private NetworkCredential networkCredential;
         private long mail_count = 0;
         const long MAX_COUNT = 20;
+        private StringBuilder attachmentsPaths = new StringBuilder();
 
 
         public static void DeleteMessage(int index)
@@ -35,16 +36,61 @@ namespace quickmailer
         public Form1()
         {
             InitializeComponent();
+            SetCbNameElements();
             txtUsername.Text = "";
             txtPassword.Text = "";
             txtSubject.Text = "";
-            cbName.Items.Add((string)"");
-            cbName.Items.Add((string)"");
-            cbName.SelectedIndex = 0;
             networkCredential = new NetworkCredential(txtUsername.Text, txtPassword.Text);
             mailers = new Mailer[MAX_COUNT];
             mailMessages = new MailMessage[MAX_COUNT];
         }
+
+        private void GetCredentials()
+        {
+            ofd.Filter = "Credentials|*.txt";
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                StreamReader sr;
+                sr = new StreamReader(ofd.FileName);
+                networkCredential.UserName = sr.ReadLine();
+                networkCredential.Password = sr.ReadLine();
+
+                txtUsername.Text = networkCredential.UserName;
+                txtPassword.Text = networkCredential.Password;
+                sr.Close();
+
+
+            }
+        }
+
+
+        private void SetCbNameElements()
+        {
+            cbName.Items.Clear();
+            StreamReader streamReader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "names.txt");
+            string name;
+            while ((name = streamReader.ReadLine()) != null)
+            {
+                if (name.Trim() != "")
+                    cbName.Items.Add(name);
+            }
+            streamReader.Close();
+            cbName.SelectedIndex = 0;
+        }
+
+
+        private void btnAddAttachments_Click(object sender, EventArgs e)
+        {
+            ofd.Filter = "ALL|*";
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+              //  attachmentsPaths.Append(ofd.FileName);
+                //attachmentsPaths.Append("\r\n");
+                //Console.WriteLine(attachmentsPaths.ToString());
+                listAttachments.Items.Add(ofd.FileName + "\r\n");
+            }
+        }
+
 
         private void mnuOpenSource_Click(object sender, EventArgs e)
         {
@@ -62,29 +108,27 @@ namespace quickmailer
                 rs = 2;
                 while (eWorkSheet.Cells[rs, 1].Value != null)
                 {
-                    String s = (string)eWorkSheet.Cells[rs, 2].Value;
-                    listView = mainlist.Items.Add(s);
-                    listView.SubItems.Add((string)eWorkSheet.Cells[rs, 3].Value);//attachments
+                    String receiverName = (string)eWorkSheet.Cells[rs, 2].Value;
+                    listView = mainlist.Items.Add(receiverName);
+
+                    listView.SubItems.Add((string)eWorkSheet.Cells[rs, 3].Value);
+                    Console.WriteLine("3 " + (string)eWorkSheet.Cells[rs, 3].Value);
                     listView.SubItems.Add((string)eWorkSheet.Cells[rs, 4].Value);
-                    listView.SubItems.Add((string)eWorkSheet.Cells[rs, 5].Value);//email
+                    Console.WriteLine("4 " + (string)eWorkSheet.Cells[rs, 4].Value);
+                    listView.SubItems.Add((string)eWorkSheet.Cells[rs, 5].Value);
+                    Console.WriteLine("5 " + (string)eWorkSheet.Cells[rs, 5].Value);
                     listView.SubItems.Add((string)eWorkSheet.Cells[rs, 6].Value);
+                    Console.WriteLine("6 " + (string)eWorkSheet.Cells[rs, 6].Value);
                     listView.SubItems.Add((string)eWorkSheet.Cells[rs, 7].Value);
+                    Console.WriteLine("7 " + (string)eWorkSheet.Cells[rs, 7].Value);
                     listView.SubItems.Add("");
+
                     rs++;
                 }
+
                 eWorkBook.Close();
                 excelApplication.Quit();
-            }
-        }
 
-        private void mnuOpenMessageBody_Click(object sender, EventArgs e)
-        {
-            ofd.Filter = "Message Body|*.txt";
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                StreamReader sr;
-                sr = new StreamReader(ofd.FileName);
-                sr.Close();
             }
         }
 
@@ -93,6 +137,7 @@ namespace quickmailer
             string s_message;
             string[] s_emails;
             s_message = (File.OpenText(txtContent.Text)).ReadToEnd();
+            Console.WriteLine(s_message);
 
             mail_count = 0;
             foreach (ListViewItem item in mainlist.Items)
@@ -115,23 +160,30 @@ namespace quickmailer
                     s_emails = item.SubItems[5].Text.Split(',', ';');
 
 
-                    foreach (string se in s_emails)
+
+
+                    foreach (string to in s_emails)
                     {
                         item.SubItems[6].Text = "Sending...";
                         mailers[mail_count] = new Mailer(networkCredential);
-                        mailMessages[mail_count] = new MailMessage(txtEmail.Text, se);
+                        mailMessages[mail_count] = new MailMessage(txtEmail.Text, to);
                         mailMessages[mail_count].From = new MailAddress(txtEmail.Text, cbName.Text);
 
                         mailMessages[mail_count].Body = s_message;
+
                         mailMessages[mail_count].Subject = txtSubject.Text + " FOR " + item.Text.ToUpper();
                         mailMessages[mail_count].IsBodyHtml = true;
-                        mailMessages[mail_count].BodyEncoding = ASCIIEncoding.Default;
-
-                        if (item.SubItems[2].Text.Length!=0)
+                 
+                        if (listAttachments.Items.Count != 0)
                         {
-                            Attachment a = new Attachment(item.SubItems[2].Text);
-                            mailMessages[mail_count].Attachments.Add(a);
+                            foreach (ListViewItem attachmentPath in listAttachments.Items)
+                            {
+                                Console.WriteLine("attach        =      "+attachmentPath.Text);
+                                mailMessages[mail_count].Attachments.Add(new Attachment(attachmentPath.Text.Substring(0,attachmentPath.Text.Length-2)));
+                               
+                            }
                         }
+                        Console.WriteLine(mailMessages[mail_count].Body);
                         ListViewX sending = new ListViewX();
                         sending.item = item;
                         sending.rowindex = (int)mail_count;
@@ -172,6 +224,69 @@ namespace quickmailer
                     break;
             }
         }
+
+        private void mnuSelectAll_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in mainlist.Items)
+            {
+                item.Checked = true;
+            }
+        }
+
+        private void btnGetCredentials_Click(object sender, EventArgs e)
+        {
+            GetCredentials();
+        }
+
+        private void btnSaveCredentials_Click(object sender, EventArgs e)
+        {
+            string fileName = "Credentials " + networkCredential.UserName + ".txt";
+            FileInfo fileInfo = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + fileName);
+            StreamWriter streamWriter;
+            if (fileInfo.Exists)
+            {
+                fileInfo.Delete();
+            }
+            streamWriter = fileInfo.CreateText();
+            streamWriter.WriteLine(networkCredential.UserName);
+            streamWriter.WriteLine(networkCredential.Password);
+            streamWriter.Close();
+            MessageBox.Show("Credentials saved to " + fileInfo.FullName);
+        }
+
+        private void btnEditBody_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("notepad.exe", txtContent.Text);
+        }
+
+        private void mnuSelectNone_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in mainlist.Items)
+            {
+                item.Checked = false;
+            }
+        }
+
+        private void btnRemoveAttachment_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in listAttachments.Items)
+            {
+                if (item.Checked)
+                {
+                    item.Remove();
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     class Mailer
@@ -179,19 +294,19 @@ namespace quickmailer
         private SmtpClient client;
         private Attachment attachment;
 
-        public Mailer(NetworkCredential nc)
+        public Mailer(NetworkCredential credentials)
         {
             client = new SmtpClient("smtp.googlemail.com");
             client.Port = 587;
             client.EnableSsl = true;
-            client.Credentials = nc;
+            client.Credentials = credentials;
             client.SendCompleted += new SendCompletedEventHandler(SendCompleted);
         }
 
 
-        public void SendMessage(MailMessage m, ListViewX token)
+        public void SendMessage(MailMessage message, ListViewX token)
         {
-            client.SendAsync(m, token);
+            client.SendAsync(message, token);
         }
 
         private static void SendCompleted(Object smtpClient, AsyncCompletedEventArgs @event)

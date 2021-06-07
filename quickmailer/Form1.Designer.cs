@@ -34,13 +34,19 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fILEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpenSource = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuOpenMessageBody = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.lISTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSelectNone = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSend = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnRemoveAttachment = new System.Windows.Forms.Button();
+            this.listAttachments = new System.Windows.Forms.ListView();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnAddAttachments = new System.Windows.Forms.Button();
+            this.btnEditBody = new System.Windows.Forms.Button();
+            this.btnSaveCredentials = new System.Windows.Forms.Button();
+            this.btnGetCredentials = new System.Windows.Forms.Button();
             this.cbName = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
@@ -71,7 +77,7 @@
             // 
             // mStatus
             // 
-            this.mStatus.Location = new System.Drawing.Point(0, 422);
+            this.mStatus.Location = new System.Drawing.Point(0, 505);
             this.mStatus.Name = "mStatus";
             this.mStatus.Size = new System.Drawing.Size(1264, 22);
             this.mStatus.TabIndex = 1;
@@ -97,7 +103,6 @@
             // 
             this.fILEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuOpenSource,
-            this.mnuOpenMessageBody,
             this.mnuExit});
             this.fILEToolStripMenuItem.Name = "fILEToolStripMenuItem";
             this.fILEToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
@@ -106,21 +111,14 @@
             // mnuOpenSource
             // 
             this.mnuOpenSource.Name = "mnuOpenSource";
-            this.mnuOpenSource.Size = new System.Drawing.Size(168, 22);
+            this.mnuOpenSource.Size = new System.Drawing.Size(127, 22);
             this.mnuOpenSource.Text = "SOURCE...";
             this.mnuOpenSource.Click += new System.EventHandler(this.mnuOpenSource_Click);
-            // 
-            // mnuOpenMessageBody
-            // 
-            this.mnuOpenMessageBody.Name = "mnuOpenMessageBody";
-            this.mnuOpenMessageBody.Size = new System.Drawing.Size(168, 22);
-            this.mnuOpenMessageBody.Text = "MESSAGE BODY...";
-            this.mnuOpenMessageBody.Click += new System.EventHandler(this.mnuOpenMessageBody_Click);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(168, 22);
+            this.mnuExit.Size = new System.Drawing.Size(127, 22);
             this.mnuExit.Text = "EXIT";
             // 
             // lISTToolStripMenuItem
@@ -135,14 +133,16 @@
             // mnuSelectAll
             // 
             this.mnuSelectAll.Name = "mnuSelectAll";
-            this.mnuSelectAll.Size = new System.Drawing.Size(180, 22);
+            this.mnuSelectAll.Size = new System.Drawing.Size(148, 22);
             this.mnuSelectAll.Text = "SELECT ALL";
+            this.mnuSelectAll.Click += new System.EventHandler(this.mnuSelectAll_Click);
             // 
             // mnuSelectNone
             // 
             this.mnuSelectNone.Name = "mnuSelectNone";
-            this.mnuSelectNone.Size = new System.Drawing.Size(180, 22);
+            this.mnuSelectNone.Size = new System.Drawing.Size(148, 22);
             this.mnuSelectNone.Text = "SELECT NONE";
+            this.mnuSelectNone.Click += new System.EventHandler(this.mnuSelectNone_Click);
             // 
             // mnuSend
             // 
@@ -159,6 +159,13 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnRemoveAttachment);
+            this.splitContainer1.Panel1.Controls.Add(this.listAttachments);
+            this.splitContainer1.Panel1.Controls.Add(this.label7);
+            this.splitContainer1.Panel1.Controls.Add(this.btnAddAttachments);
+            this.splitContainer1.Panel1.Controls.Add(this.btnEditBody);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSaveCredentials);
+            this.splitContainer1.Panel1.Controls.Add(this.btnGetCredentials);
             this.splitContainer1.Panel1.Controls.Add(this.cbName);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.txtEmail);
@@ -176,16 +183,94 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.mainlist);
-            this.splitContainer1.Size = new System.Drawing.Size(1264, 398);
-            this.splitContainer1.SplitterDistance = 357;
+            this.splitContainer1.Size = new System.Drawing.Size(1264, 481);
+            this.splitContainer1.SplitterDistance = 339;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // btnRemoveAttachment
+            // 
+            this.btnRemoveAttachment.Location = new System.Drawing.Point(225, 285);
+            this.btnRemoveAttachment.Name = "btnRemoveAttachment";
+            this.btnRemoveAttachment.Size = new System.Drawing.Size(75, 23);
+            this.btnRemoveAttachment.TabIndex = 22;
+            this.btnRemoveAttachment.Text = "REMOVE";
+            this.btnRemoveAttachment.UseVisualStyleBackColor = true;
+            this.btnRemoveAttachment.Click += new System.EventHandler(this.btnRemoveAttachment_Click);
+            // 
+            // listAttachments
+            // 
+            this.listAttachments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listAttachments.CheckBoxes = true;
+            this.listAttachments.FullRowSelect = true;
+            this.listAttachments.GridLines = true;
+            this.listAttachments.HideSelection = false;
+            this.listAttachments.Location = new System.Drawing.Point(63, 315);
+            this.listAttachments.Name = "listAttachments";
+            this.listAttachments.Size = new System.Drawing.Size(237, 97);
+            this.listAttachments.TabIndex = 21;
+            this.listAttachments.UseCompatibleStateImageBehavior = false;
+            this.listAttachments.View = System.Windows.Forms.View.List;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(60, 290);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 13);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Attachments:";
+            // 
+            // btnAddAttachments
+            // 
+            this.btnAddAttachments.Location = new System.Drawing.Point(144, 285);
+            this.btnAddAttachments.Name = "btnAddAttachments";
+            this.btnAddAttachments.Size = new System.Drawing.Size(75, 23);
+            this.btnAddAttachments.TabIndex = 18;
+            this.btnAddAttachments.Text = "ATTACH";
+            this.btnAddAttachments.UseVisualStyleBackColor = true;
+            this.btnAddAttachments.Click += new System.EventHandler(this.btnAddAttachments_Click);
+            // 
+            // btnEditBody
+            // 
+            this.btnEditBody.Location = new System.Drawing.Point(61, 227);
+            this.btnEditBody.Name = "btnEditBody";
+            this.btnEditBody.Size = new System.Drawing.Size(75, 23);
+            this.btnEditBody.TabIndex = 17;
+            this.btnEditBody.Text = "EDIT BODY";
+            this.btnEditBody.UseVisualStyleBackColor = true;
+            this.btnEditBody.Click += new System.EventHandler(this.btnEditBody_Click);
+            // 
+            // btnSaveCredentials
+            // 
+            this.btnSaveCredentials.Location = new System.Drawing.Point(225, 64);
+            this.btnSaveCredentials.Name = "btnSaveCredentials";
+            this.btnSaveCredentials.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveCredentials.TabIndex = 16;
+            this.btnSaveCredentials.Text = "SAVE   FILE";
+            this.btnSaveCredentials.UseVisualStyleBackColor = true;
+            this.btnSaveCredentials.Click += new System.EventHandler(this.btnSaveCredentials_Click);
+            // 
+            // btnGetCredentials
+            // 
+            this.btnGetCredentials.Location = new System.Drawing.Point(144, 64);
+            this.btnGetCredentials.Name = "btnGetCredentials";
+            this.btnGetCredentials.Size = new System.Drawing.Size(75, 23);
+            this.btnGetCredentials.TabIndex = 15;
+            this.btnGetCredentials.Text = "FROM FILE";
+            this.btnGetCredentials.UseVisualStyleBackColor = true;
+            this.btnGetCredentials.Click += new System.EventHandler(this.btnGetCredentials_Click);
             // 
             // cbName
             // 
+            this.cbName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbName.FormattingEnabled = true;
-            this.cbName.Location = new System.Drawing.Point(63, 64);
+            this.cbName.Location = new System.Drawing.Point(63, 113);
             this.cbName.Name = "cbName";
-            this.cbName.Size = new System.Drawing.Size(280, 21);
+            this.cbName.Size = new System.Drawing.Size(237, 21);
             this.cbName.TabIndex = 14;
             this.cbName.SelectedIndexChanged += new System.EventHandler(this.cbName_SelectedIndexChanged);
             // 
@@ -204,9 +289,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(61, 140);
+            this.txtEmail.Location = new System.Drawing.Point(63, 140);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(292, 23);
+            this.txtEmail.Size = new System.Drawing.Size(237, 23);
             this.txtEmail.TabIndex = 12;
             // 
             // label5
@@ -224,24 +309,25 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtContent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtContent.Location = new System.Drawing.Point(61, 198);
+            this.txtContent.Location = new System.Drawing.Point(63, 198);
             this.txtContent.Name = "txtContent";
-            this.txtContent.Size = new System.Drawing.Size(292, 23);
+            this.txtContent.Size = new System.Drawing.Size(237, 23);
             this.txtContent.TabIndex = 10;
             this.txtContent.Click += new System.EventHandler(this.txtContent_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(2, 65);
+            this.label4.Location = new System.Drawing.Point(2, 114);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "Name";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(63, 92);
+            this.btnLogin.Location = new System.Drawing.Point(63, 64);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
             this.btnLogin.TabIndex = 7;
@@ -267,7 +353,7 @@
             this.txtPassword.Location = new System.Drawing.Point(63, 35);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(280, 23);
+            this.txtPassword.Size = new System.Drawing.Size(237, 23);
             this.txtPassword.TabIndex = 5;
             // 
             // label2
@@ -287,7 +373,7 @@
             this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUsername.Location = new System.Drawing.Point(63, 6);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(280, 23);
+            this.txtUsername.Size = new System.Drawing.Size(237, 23);
             this.txtUsername.TabIndex = 3;
             // 
             // label1
@@ -305,9 +391,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSubject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSubject.Location = new System.Drawing.Point(61, 169);
+            this.txtSubject.Location = new System.Drawing.Point(63, 169);
             this.txtSubject.Name = "txtSubject";
-            this.txtSubject.Size = new System.Drawing.Size(292, 23);
+            this.txtSubject.Size = new System.Drawing.Size(237, 23);
             this.txtSubject.TabIndex = 0;
             // 
             // mainlist
@@ -330,7 +416,7 @@
             this.mainlist.HideSelection = false;
             this.mainlist.Location = new System.Drawing.Point(3, 3);
             this.mainlist.Name = "mainlist";
-            this.mainlist.Size = new System.Drawing.Size(897, 392);
+            this.mainlist.Size = new System.Drawing.Size(897, 475);
             this.mainlist.TabIndex = 1;
             this.mainlist.UseCompatibleStateImageBehavior = false;
             this.mainlist.View = System.Windows.Forms.View.Details;
@@ -376,7 +462,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 444);
+            this.ClientSize = new System.Drawing.Size(1264, 527);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mStatus);
             this.Controls.Add(this.menuStrip1);
@@ -384,8 +470,9 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "quickmailer";
+            this.Text = "SMTP Client v1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -406,7 +493,6 @@
         private System.Windows.Forms.ToolStripMenuItem fILEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuOpenSource;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
-        private System.Windows.Forms.ToolStripMenuItem mnuOpenMessageBody;
         private System.Windows.Forms.ToolStripMenuItem lISTToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuSelectAll;
         private System.Windows.Forms.ToolStripMenuItem mnuSelectNone;
@@ -433,6 +519,13 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.ComboBox cbName;
+        private System.Windows.Forms.Button btnGetCredentials;
+        private System.Windows.Forms.Button btnSaveCredentials;
+        private System.Windows.Forms.Button btnEditBody;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnAddAttachments;
+        private System.Windows.Forms.ListView listAttachments;
+        private System.Windows.Forms.Button btnRemoveAttachment;
     }
 }
 
